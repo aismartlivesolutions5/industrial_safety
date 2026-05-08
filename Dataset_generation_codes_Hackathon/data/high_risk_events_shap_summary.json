@@ -1,0 +1,22 @@
+{
+  "num_events": 277122,
+  "merge_tolerance": "5min",
+  "topk": 5,
+  "pred_label_distribution": {
+    "Critical": 137573,
+    "High Risk": 131164,
+    "Watch": 4474,
+    "Normal": 3911
+  },
+  "global_mean_abs_shap_on_events": {
+    "boiler_pressure_bar": 0.8799302511131862,
+    "boiler_temperature_c": 0.27212972859299983,
+    "voc_ppm": 0.17379695808502896,
+    "nh3_ppm": 0.11593115911311183,
+    "h2s_ppm": 0.06505908788840362,
+    "lel_percent": 0.042576394910526685,
+    "vibration_rms": 0.09629371618620775,
+    "active_alarm_count": 0.8126654189036494,
+    "days_since_last_maintenance": 0.09708041221250364
+  }
+}

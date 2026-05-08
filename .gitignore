@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Environment variables (contains API keys)
+.env
+.env.local
+.env.*.local
+
+# Large generated data files (regenerate with dataset_generator.py)
+Dataset_generation_codes_Hackathon/data/bulk_drug_factory_safety_90d_1min.csv
+Dataset_generation_codes_Hackathon/data/bulk_drug_factory_MASTER_scored.csv
+Dataset_generation_codes_Hackathon/data/bulk_drug_factory_with_if_anomalies.csv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.code-workspace
+
+# Jupyter
+.ipynb_checkpoints/
+
+# pytest
+.pytest_cache/
+.mypy_cache/
+
+Dataset_generation_codes_Hackathon/data/high_risk_events_with_shap.csv
+Dataset_generation_codes_Hackathon/data/high_risk_events_with_shap.json

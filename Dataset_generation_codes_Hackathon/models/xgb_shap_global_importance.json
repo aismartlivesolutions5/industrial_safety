@@ -1,0 +1,100 @@
+{
+  "type": "multiclass",
+  "global_mean_abs_shap": {
+    "boiler_pressure_bar": 0.5392661690711975,
+    "boiler_temperature_c": 0.29281556606292725,
+    "voc_ppm": 0.34040209650993347,
+    "nh3_ppm": 0.39655929803848267
+  },
+  "model_meta": {
+    "name": "XGB Bulk Drug Safety Risk Classifier (CPU, early-stopping, threshold-labeled, noise-aug)",
+    "xgboost_version": "3.0.0",
+    "trained_at": "2026-02-01T16:33:09.659042",
+    "features": [
+      "boiler_pressure_bar",
+      "boiler_temperature_c",
+      "voc_ppm",
+      "nh3_ppm",
+      "h2s_ppm",
+      "lel_percent",
+      "vibration_rms",
+      "active_alarm_count",
+      "days_since_last_maintenance"
+    ],
+    "class_mapping": {
+      "0": "Normal",
+      "1": "Watch",
+      "2": "High Risk",
+      "3": "Critical"
+    },
+    "metrics": {
+      "clean_test_accuracy": 0.9281957304526749,
+      "clean_test_f1_weighted": 0.9279874492844623,
+      "clean_test_f1_macro": 0.9252898577464985,
+      "robust_test_accuracy": 0.7491062242798354,
+      "robust_test_f1_weighted": 0.7504108632208829,
+      "robust_test_f1_macro": 0.722915193458217,
+      "search_best_score": 0.8051583498735294
+    },
+    "best_params": {
+      "subsample": 0.85,
+      "reg_lambda": 1.0,
+      "n_estimators": 1000,
+      "min_child_weight": 4,
+      "max_depth": 8,
+      "learning_rate": 0.08,
+      "gamma": 0.1,
+      "colsample_bytree": 0.7
+    },
+    "best_iteration": 109,
+    "threshold_config": {
+      "voc_ppm": {
+        "watch": 50,
+        "high": 100,
+        "critical": 300
+      },
+      "nh3_ppm": {
+        "watch": 25,
+        "high": 50,
+        "critical": 100
+      },
+      "h2s_ppm": {
+        "watch": 10,
+        "high": 20,
+        "critical": 50
+      },
+      "lel_percent": {
+        "watch": 5,
+        "high": 10,
+        "critical": 20
+      },
+      "vibration_rms": {
+        "watch": 2.8,
+        "high": 4.5,
+        "critical": 7.1
+      },
+      "active_alarm_count": {
+        "watch": 2,
+        "high": 4,
+        "critical": 6
+      },
+      "days_since_last_maintenance": {
+        "watch": 30,
+        "high": 60,
+        "critical": 90
+      },
+      "boiler_pressure_bar": {
+        "watch": 1.05,
+        "high": 1.1,
+        "critical": 1.15,
+        "mode": "ratio_vs_baseline"
+      },
+      "boiler_temperature_c": {
+        "watch": 10,
+        "high": 20,
+        "critical": 30,
+        "mode": "delta_vs_baseline"
+      }
+    }
+  }
+}

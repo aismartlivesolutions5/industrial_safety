@@ -1,0 +1,214 @@
+{
+  "examples": [
+    {
+      "pred_class": 3,
+      "top_reasons": [
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": -0.5309396982192993
+        },
+        {
+          "feature": "nh3_ppm",
+          "shap": 0.17112979292869568
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": 0.035667382180690765
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": -0.03450397774577141
+        }
+      ]
+    },
+    {
+      "pred_class": 2,
+      "top_reasons": [
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": -1.410323143005371
+        },
+        {
+          "feature": "nh3_ppm",
+          "shap": 0.15906116366386414
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": 0.10602700710296631
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": 0.04423951730132103
+        }
+      ]
+    },
+    {
+      "pred_class": 0,
+      "top_reasons": [
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": 1.340904712677002
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": -1.2924795150756836
+        },
+        {
+          "feature": "nh3_ppm",
+          "shap": -1.1323601007461548
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": -0.651721179485321
+        }
+      ]
+    },
+    {
+      "pred_class": 3,
+      "top_reasons": [
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": -0.23030877113342285
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": 0.06883759051561356
+        },
+        {
+          "feature": "nh3_ppm",
+          "shap": -0.06252624094486237
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": 0.05154569074511528
+        }
+      ]
+    },
+    {
+      "pred_class": 2,
+      "top_reasons": [
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": -2.9304471015930176
+        },
+        {
+          "feature": "nh3_ppm",
+          "shap": 0.13492785394191742
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": 0.0730915516614914
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": 0.03029000759124756
+        }
+      ]
+    },
+    {
+      "pred_class": 0,
+      "top_reasons": [
+        {
+          "feature": "nh3_ppm",
+          "shap": -2.2571561336517334
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": -0.7327004075050354
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": 0.5299357771873474
+        },
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": 0.2211470603942871
+        }
+      ]
+    },
+    {
+      "pred_class": 0,
+      "top_reasons": [
+        {
+          "feature": "nh3_ppm",
+          "shap": -1.3745346069335938
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": -1.1341215372085571
+        },
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": 0.9735742211341858
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": -0.17227207124233246
+        }
+      ]
+    },
+    {
+      "pred_class": 0,
+      "top_reasons": [
+        {
+          "feature": "nh3_ppm",
+          "shap": -1.5021417140960693
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": -1.335613489151001
+        },
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": 1.2232749462127686
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": -0.3678967356681824
+        }
+      ]
+    },
+    {
+      "pred_class": 3,
+      "top_reasons": [
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": -0.3778884708881378
+        },
+        {
+          "feature": "nh3_ppm",
+          "shap": 0.1993991732597351
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": 0.012493709102272987
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": 0.012137245386838913
+        }
+      ]
+    },
+    {
+      "pred_class": 0,
+      "top_reasons": [
+        {
+          "feature": "nh3_ppm",
+          "shap": -1.4191933870315552
+        },
+        {
+          "feature": "boiler_pressure_bar",
+          "shap": 1.3958088159561157
+        },
+        {
+          "feature": "voc_ppm",
+          "shap": -1.232822060585022
+        },
+        {
+          "feature": "boiler_temperature_c",
+          "shap": -0.40686193108558655
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "out_csv": "/teamspace/studios/this_studio/Dataset_generation_codes/Hackathon/data/bulk_drug_factory_with_if_anomalies.csv",
+  "model_dir": "/teamspace/studios/this_studio/Dataset_generation_codes/Hackathon/models",
+  "rows": 777600,
+  "assets": [
+    "BOILER_A1",
+    "BOILER_A2",
+    "BOILER_B1",
+    "BOILER_B2",
+    "REACTOR_C1",
+    "REACTOR_C2"
+  ],
+  "alert_distribution": {
+    "Normal": 745631,
+    "High": 22808,
+    "Critical": 5753,
+    "Watch": 3408
+  }
+}
