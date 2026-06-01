@@ -155,9 +155,22 @@ export const api = {
   },
 
   predict: async (req: PredictRequest): Promise<PredictResponse> => {
+    const p = req.payload as Record<string, unknown>;
+    // Map simulator field names → backend field names + fill defaults
+    const row = {
+      boiler_pressure_bar: Number(p.pressure_bar_g ?? p.boiler_pressure_bar ?? 10.0),
+      boiler_temperature_c: Number(p.temp_c ?? p.boiler_temperature_c ?? 160.0),
+      voc_ppm: Number(p.voc_ppm ?? 20.0),
+      nh3_ppm: Number(p.nh3_ppm ?? 2.0),
+      h2s_ppm: Number(p.h2s_ppm ?? 1.0),
+      lel_percent: Number(p.lel_pct ?? p.lel_percent ?? 5.0),
+      vibration_rms: Number(p.vibration_rms_mm_s ?? p.vibration_rms ?? 1.5),
+      active_alarm_count: Number(p.active_alarm_count ?? 0),
+      days_since_last_maintenance: Number(p.days_since_last_maintenance ?? 10),
+    };
     const raw = await request<Record<string, unknown>>("/explain/predict", {
       method: "POST",
-      body: req.payload,
+      body: { ...row, return_shap: true, top_k: 4 },
     });
     // Map our backend's predict response to the expected shape
     const risk = (raw.risk as Record<string, unknown>) ?? {};
