@@ -1,1 +1,19 @@
-project_id = "bxukpkzugcjeehvhhabb"
+project_id = "zlmknrcidieinyvqnmae"
+
+[functions.health]
+verify_jwt = false
+
+[functions.overview]
+verify_jwt = false
+
+[functions.alerts-recent]
+verify_jwt = false
+
+[functions.alerts-last-24h]
+verify_jwt = false
+
+[functions.predict]
+verify_jwt = false
+
+[functions.chat]
+verify_jwt = false

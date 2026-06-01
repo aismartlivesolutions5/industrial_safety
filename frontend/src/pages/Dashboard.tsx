@@ -1,75 +1,56 @@
-import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
-import {
-  fetchDashboardOverview,
-  fetchRiskTrend,
-  fetchTopRiskyAssets,
-  fetchLiveAlerts,
-  fetchChatbotSummary,
-} from "@/lib/api";
-import { AppLayout } from "@/components/layout/AppLayout";
-import { KPICards } from "@/components/dashboard/KPICards";
-import { RiskTrendChart } from "@/components/dashboard/RiskTrendChart";
-import { TopRiskyAssetsTable } from "@/components/dashboard/TopRiskyAssetsTable";
-import { LiveAlertsFeed } from "@/components/dashboard/LiveAlertsFeed";
-import { ChatbotSummaryCard } from "@/components/dashboard/ChatbotSummaryCard";
-import { Loader2 } from "lucide-react";
+import { Shield, Activity } from "lucide-react";
+import { KpiGrid } from "@/components/dashboard/KpiGrid";
+import { SafetySnapshot } from "@/components/dashboard/SafetySnapshot";
+import { SensorRows } from "@/components/dashboard/SensorRows";
+import { AlertsPanel } from "@/components/dashboard/AlertsPanel";
+import { PredictionSimulator } from "@/components/dashboard/PredictionSimulator";
+import { AiCopilot } from "@/components/dashboard/AiCopilot";
 
 export default function Dashboard() {
-  const overview = useQuery({ queryKey: ["dashboard-overview"], queryFn: fetchDashboardOverview, refetchInterval: 90000, retry: 2, refetchOnWindowFocus: false });
-  const riskTrend = useQuery({ queryKey: ["risk-trend"], queryFn: fetchRiskTrend, refetchInterval: 100000, enabled: overview.isSuccess, retry: 1, refetchOnWindowFocus: false });
-  const topRisky = useQuery({ queryKey: ["top-risky"], queryFn: fetchTopRiskyAssets, refetchInterval: 110000, enabled: riskTrend.isSuccess, retry: 1, refetchOnWindowFocus: false });
-  const alerts = useQuery({ queryKey: ["live-alerts"], queryFn: fetchLiveAlerts, refetchInterval: 120000, enabled: topRisky.isSuccess, retry: 1, refetchOnWindowFocus: false });
-  const summary = useQuery({ queryKey: ["chatbot-summary"], queryFn: fetchChatbotSummary, enabled: alerts.isSuccess, retry: 1, refetchOnWindowFocus: false });
-
-  const isLoading = overview.isLoading;
-  const hasError = overview.isError && !overview.data;
-
   return (
-    <AppLayout title="Command Center" subtitle="Real-time industrial safety monitoring">
-      {isLoading ? (
-        <div className="flex items-center justify-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b border-border/50 px-4 lg:px-6 py-3">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-nominal/10 flex items-center justify-center">
+              <Shield size={16} strokeWidth={1.5} className="text-nominal" />
+            </div>
+            <div>
+              <h1 className="text-sm font-semibold tracking-wide">System Overview: Industrial Plant — Sector 7G</h1>
+              <p className="text-[10px] font-mono text-muted-foreground flex items-center gap-1">
+                <Activity size={10} strokeWidth={1.5} className="text-nominal" />
+                MONITORING ACTIVE · REAL-TIME FEED
+              </p>
+            </div>
+          </div>
+          <div className="hidden sm:flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-nominal status-pulse" />
+            <span className="text-[10px] font-mono text-muted-foreground uppercase">System Online</span>
+          </div>
         </div>
-      ) : hasError ? (
-        <div className="flex flex-col items-center justify-center h-64 gap-4">
-          <p className="text-destructive font-medium">Failed to connect to upstream API</p>
-          <p className="text-muted-foreground text-sm">The backend may be starting up. Please wait a moment and try again.</p>
-          <button onClick={() => overview.refetch()} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm hover:opacity-90">
-            Retry
-          </button>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-            <KPICards data={overview.data} />
-          </motion.div>
+      </header>
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            <motion.div className="xl:col-span-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-              <RiskTrendChart data={riskTrend.data} isLoading={riskTrend.isLoading} />
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
-              <ChatbotSummaryCard data={summary.data} isLoading={summary.isLoading} />
-            </motion.div>
+      {/* Main Content */}
+      <main className="max-w-[1600px] mx-auto p-4 lg:p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+          {/* Left: KPI + Snapshot + Sensors + Alerts + Prediction */}
+          <div className="lg:col-span-2 space-y-4 lg:space-y-6">
+            <KpiGrid />
+            <SafetySnapshot />
+            <SensorRows />
+            <AlertsPanel />
+            <PredictionSimulator />
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              <TopRiskyAssetsTable data={topRisky.data} isLoading={topRisky.isLoading} />
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
-              <LiveAlertsFeed data={alerts.data} isLoading={alerts.isLoading} />
-            </motion.div>
+          {/* Right: AI Copilot */}
+          <div className="lg:col-span-1">
+            <div className="lg:sticky lg:top-6">
+              <AiCopilot />
+            </div>
           </div>
-
-          {overview.data?.last_updated && (
-            <p className="text-xs text-muted-foreground font-mono text-right">
-              Last updated: {new Date(overview.data.last_updated).toLocaleString()}
-            </p>
-          )}
         </div>
-      )}
-    </AppLayout>
+      </main>
+    </div>
   );
 }
