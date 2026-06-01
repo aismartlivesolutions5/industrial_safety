@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -11,10 +13,36 @@ from app.routes.explain import router as explain_router
 from app.routes.meta import router as meta_router
 from app.routes.analytics import router as analytics_router
 from app.routes.anomaly import router as anomaly_router
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Pre-load all datasets and models into lru_cache at startup
+    # so the first API request never triggers a slow lazy load
+    from app.services.data_loader import (
+        load_master_df,
+        load_daily_df,
+        load_events_df,
+        load_events_shap_df,
+        load_xgb_package,
+        load_iso_thresholds_json,
+        list_iso_assets,
+    )
+    load_master_df()
+    load_daily_df()
+    load_events_df()
+    load_events_shap_df()
+    load_xgb_package()
+    load_iso_thresholds_json()
+    list_iso_assets()
+    yield
+
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
     debug=settings.DEBUG,
+    lifespan=lifespan,
 )
 
 
