@@ -44,7 +44,25 @@ async function request<T>(
 
 // ── Response transformers ──────────────────────────────────────────────────
 
-function toOverview(raw: Record<string, unknown>): OverviewData {
+function toSensorRow(a: Record<string, unknown>): Record<string, unknown> {
+  return {
+    timestamp: a.last_updated ?? a.timestamp,
+    asset_id: a.asset_id,
+    asset_type: a.asset_type ?? null,
+    risk_label: a.risk_label ?? a.alert_level ?? "Normal",
+    pressure_bar_g: a.boiler_pressure_bar,
+    temp_c: a.boiler_temperature_c,
+    lel_pct: a.lel_percent,
+    voc_ppm: a.voc_ppm,
+    vibration_rms_mm_s: a.vibration_rms,
+    active_alarm_count: a.active_alarm_count,
+  };
+}
+
+function toOverview(
+  raw: Record<string, unknown>,
+  assetRows: Record<string, unknown>[]
+): OverviewData {
   const avgScore = Number(raw.avg_anomaly_score ?? 0);
   return {
     emergency_count: Number(raw.high_assets ?? 0),
@@ -53,7 +71,8 @@ function toOverview(raw: Record<string, unknown>): OverviewData {
     recent_alerts_count: Number(raw.active_anomalies ?? 0),
     top_alert_area: null,
     top_alert_plant: null,
-    latest_dashboard_rows: [],
+    latest_dashboard_snapshot: assetRows[0] ?? undefined,
+    latest_dashboard_rows: assetRows,
   };
 }
 
@@ -109,8 +128,23 @@ export const api = {
     request<{ status: string }>("/health"),
 
   getOverview: async () => {
-    const raw = await request<Record<string, unknown>>("/dashboard/overview");
-    return toOverview(raw);
+    const [raw, assetsRaw] = await Promise.all([
+      request<Record<string, unknown>>("/dashboard/overview"),
+      request<Record<string, unknown>>("/assets").catch(() => ({ assets: [] })),
+    ]);
+
+    const assetList = (assetsRaw.assets as Record<string, unknown>[]) ?? [];
+
+    // Fetch latest sensor readings for each asset in parallel
+    const latestRows = await Promise.all(
+      assetList.map((a) =>
+        request<Record<string, unknown>>(`/assets/${a.asset_id}/latest`)
+          .then(toSensorRow)
+          .catch(() => toSensorRow(a))
+      )
+    );
+
+    return toOverview(raw, latestRows);
   },
 
   getRecentAlerts: async (windowMinutes = 60, topN = 20) => {
