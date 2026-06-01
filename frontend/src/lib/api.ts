@@ -8,8 +8,7 @@ import type {
   ChatResponse,
 } from "@/types/api";
 
-// Use Vercel proxy (/api/*) to avoid CORS — requests stay same-origin
-const BASE_URL = "/api";
+const BASE_URL = "https://industrial-safety-1-ieju.onrender.com";
 
 class ApiError extends Error {
   constructor(public status: number, message: string) {
