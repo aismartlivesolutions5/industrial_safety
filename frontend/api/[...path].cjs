@@ -1,6 +1,6 @@
 const BACKEND = process.env.BACKEND_URL || "https://industrial-safety-1-ieju.onrender.com";
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   const segments = Array.isArray(req.query.path) ? req.query.path : [req.query.path];
   const apiPath = segments.join("/");
 
@@ -24,4 +24,4 @@ export default async function handler(req, res) {
   } catch (err) {
     res.status(504).json({ error: "Gateway timeout", detail: String(err) });
   }
-}
+};
