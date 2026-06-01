@@ -23,7 +23,6 @@ env/
 
 # Large generated data files (regenerate with dataset_generator.py)
 Dataset_generation_codes_Hackathon/data/bulk_drug_factory_safety_90d_1min.csv
-Dataset_generation_codes_Hackathon/data/bulk_drug_factory_MASTER_scored.csv
 Dataset_generation_codes_Hackathon/data/bulk_drug_factory_with_if_anomalies.csv
 
 # OS
