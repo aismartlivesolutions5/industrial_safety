@@ -126,23 +126,15 @@ export const api = {
     request<{ status: string }>("/health"),
 
   getOverview: async () => {
-    const [raw, assetsRaw] = await Promise.all([
+    const [raw, topRaw] = await Promise.all([
       request<Record<string, unknown>>("/dashboard/overview"),
-      request<Record<string, unknown>>("/assets").catch(() => ({ assets: [] })),
+      request<Record<string, unknown>>("/dashboard/top_risky_assets?limit=6").catch(() => ({ assets: [] })),
     ]);
 
-    const assetList = (assetsRaw.assets as Record<string, unknown>[]) ?? [];
+    const assetList = (topRaw.assets as Record<string, unknown>[]) ?? [];
+    const assetRows = assetList.map(toSensorRow);
 
-    // Fetch latest sensor readings for each asset in parallel
-    const latestRows = await Promise.all(
-      assetList.map((a) =>
-        request<Record<string, unknown>>(`/assets/${a.asset_id}/latest`)
-          .then(toSensorRow)
-          .catch(() => toSensorRow(a))
-      )
-    );
-
-    return toOverview(raw, latestRows);
+    return toOverview(raw, assetRows);
   },
 
   getRecentAlerts: async (windowMinutes = 60, topN = 20) => {
