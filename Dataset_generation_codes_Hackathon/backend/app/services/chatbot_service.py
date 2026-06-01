@@ -7,7 +7,6 @@ from google import genai
 from app.config import settings
 from app.services.alert_service import get_live_alerts
 from app.services.data_loader import get_latest_per_asset, load_events_shap_df
-from app.services.data_loader import load_events_shap_df, get_latest_per_asset
 
 def _safe_float(value: Any, default: Optional[float] = None) -> Optional[float]:
     try:

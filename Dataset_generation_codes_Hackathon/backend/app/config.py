@@ -34,7 +34,7 @@ class Settings:
     DEBUG: bool = field(default_factory=lambda: os.getenv("DEBUG", "true").lower() == "true")
     CORS_ORIGINS: List[str] = field(default_factory=lambda: _env_list("CORS_ORIGINS", "*"))
 
-    GEMINI_API_KEY: str = field(default_factory=lambda: os.getenv("GEMINI_API_KEY", "AIzaSyAFBuBxnnFI11KcqSZ8oL1QVX8dh2nJF-0"))
+    GEMINI_API_KEY: str = field(default_factory=lambda: os.getenv("GEMINI_API_KEY", ""))
     GEMINI_MODEL: str = field(default_factory=lambda: os.getenv("GEMINI_MODEL", "gemini-2.5-pro"))
 
     ISO_PREFIX: str = field(default_factory=lambda: os.getenv("ISO_PREFIX", "isoforest_"))
