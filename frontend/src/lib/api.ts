@@ -170,23 +170,25 @@ export const api = {
     };
     const raw = await request<Record<string, unknown>>("/explain/predict", {
       method: "POST",
-      body: { ...row, return_shap: true, top_k: 4 },
+      body: { ...row, asset_id: "SIMULATOR", return_shap: false },
     });
-    // Map our backend's predict response to the expected shape
-    const risk = (raw.risk as Record<string, unknown>) ?? {};
-    const anomaly = (raw.anomaly as Record<string, unknown>) ?? {};
-    const probas = (risk.probabilities as Record<string, number>) ?? {};
+    // Backend returns pred_class, pred_label, proba directly
+    const proba: number[] = (raw.proba as number[]) ?? [1, 0, 0, 0];
+    const classMap: Record<number, string> = { 0: "Normal", 1: "Watch", 2: "High Risk", 3: "Critical" };
+    const predClass = Number(raw.pred_class ?? 0);
+    const probabilities: Record<string, number> = {};
+    proba.forEach((p, i) => { probabilities[classMap[i] ?? String(i)] = p; });
     return {
       risk: {
-        risk_class: Number(risk.pred_class ?? risk.risk_class ?? 0),
-        risk_label: String(risk.pred_label ?? risk.risk_label ?? "Normal"),
-        probabilities: probas,
+        risk_class: predClass,
+        risk_label: String(raw.pred_label ?? classMap[predClass] ?? "Normal"),
+        probabilities,
       },
       anomaly: {
-        anomaly_label: String(anomaly.alert_level ?? "Normal"),
-        is_anomaly: Number(anomaly.is_anomaly ?? 0),
-        anomaly_score: Number(anomaly.anomaly_score ?? 0),
-        decision_score: Number(anomaly.if_decision_score ?? 0),
+        anomaly_label: "Normal",
+        is_anomaly: 0,
+        anomaly_score: 0,
+        decision_score: 0,
         threshold: 0.72,
       },
     };
