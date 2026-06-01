@@ -8,7 +8,7 @@ import type {
   ChatResponse,
 } from "@/types/api";
 
-const BASE_URL = "https://industrial-safety-1-ieju.onrender.com";
+const BASE_URL = (import.meta.env.VITE_API_BASE_URL as string) || "https://industrial-safety-1-ieju.onrender.com";
 
 class ApiError extends Error {
   constructor(public status: number, message: string) {
