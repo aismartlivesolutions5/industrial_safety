@@ -6,8 +6,9 @@ export function useOverview() {
   return useQuery({
     queryKey: ["overview"],
     queryFn: api.getOverview,
-    refetchInterval: 60000,
-    retry: 2,
+    refetchInterval: 300000, // 5 minutes
+    retry: 1,
+    staleTime: 120000,
   });
 }
 
@@ -15,8 +16,9 @@ export function useRecentAlerts(windowMinutes = 60, topN = 20) {
   return useQuery({
     queryKey: ["alerts-recent", windowMinutes, topN],
     queryFn: () => api.getRecentAlerts(windowMinutes, topN),
-    refetchInterval: 60000,
-    retry: 2,
+    refetchInterval: 300000,
+    retry: 1,
+    staleTime: 120000,
   });
 }
 
@@ -24,8 +26,9 @@ export function useLast24hAlerts(topN = 20) {
   return useQuery({
     queryKey: ["alerts-last-24h", topN],
     queryFn: () => api.getLast24hAlerts(topN),
-    refetchInterval: 60000,
-    retry: 2,
+    refetchInterval: 300000,
+    retry: 1,
+    staleTime: 120000,
   });
 }
 
